@@ -1,0 +1,82 @@
+.Calculator_Main {
+    background: rgba(128, 128, 128, 0.158);
+    width: 25vw;
+    height: 80vh;
+    box-shadow: 3px 3px 15px 1px rgba(0, 0, 0, 0.226);
+    border: none;
+}
+
+.Calculator_TopSection {
+    height: 30%;
+}
+
+.Calculator_TopSection header {
+    height: 25%;
+    display: flex;
+    align-items: center;
+    padding-left: 1vw;
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.Calculator_Total {
+    display: grid;
+    justify-content: flex-end;
+    padding-right: 1.5vw;
+}
+
+
+#Calculator_History {
+    color: grey;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.Calculator_Total main {
+    font-weight: bolder;
+    font-size: 2.5rem;
+}
+
+.Calculator_MidSection {
+    height: 5%;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    font-size: .75rem;
+    font-weight: bolder;
+}
+
+.Calculator_BottomSection {
+    height: 50%;
+}
+
+.Calculator_BottomSection section {
+    height: 20%;
+}
+
+.Calculator_BottomSection section button {
+    height: 100%;
+    width: 25%;
+    font-size: 1.5rem;
+    font-weight: bold;
+    border: 1px solid rgba(0, 0, 0, 0.062);
+    background: none;
+}
+
+#Button_Operation {
+    background: rgba(255, 255, 255, 0.479);
+}
+
+#Button_Operation_NotWorking {
+    background: red;
+    color: white;
+    border: 1px solid white;
+}
+
+#Button_Numerical {
+    background: rgba(255, 255, 255, 0.75);
+}
+
+.Calculator_BottomSection section button {
+    background: rgba(128, 128, 128, 0.685);
+}
