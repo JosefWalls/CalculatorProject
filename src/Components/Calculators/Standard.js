@@ -23,10 +23,14 @@ class StandardCalculator extends React.Component {
     }
 
     handleOperation = (Operation) => {
-        alert(Operation)
+        const {CurrentInput} = this.state;
+        this.setState({History: [this.state.History.push(CurrentInput)]});
+        if(Operation === 'Clear'){
+            this.setState({CurrentInput: 0})
+        }
     }
 
-    handleNumericalInput = (Number) => {
+    handleNumericalInput = async (Number) => {
         const {CurrentInput} = this.state;
         if(CurrentInput === null){
             this.setState({CurrentInput: Number})
@@ -41,7 +45,7 @@ class StandardCalculator extends React.Component {
                    <header>Standard</header> 
                    <section className="Calculator_Total">
                        <div id="Calculator_History">
-                            <p>2 + 2 = </p>
+                            <p>2+2</p>
                        </div>
                        <main>
                            {+this.state.CurrentInput ? <p>{this.state.CurrentInput}</p>: <p>{this.state.Total}</p>}
