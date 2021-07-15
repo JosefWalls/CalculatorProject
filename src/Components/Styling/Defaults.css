@@ -28,13 +28,22 @@
 
 #Calculator_History {
     color: grey;
+}
+
+#Calculator_History p {
     display: flex;
     justify-content: flex-end;
+    justify-content: center;
+    position: relative;
+    top: 0.5vh;
 }
 
 .Calculator_Total main {
     font-weight: bolder;
     font-size: 2.5rem;
+    z-index: 100;
+    position: relative;
+    bottom: 5vh;
 }
 
 .Calculator_MidSection {

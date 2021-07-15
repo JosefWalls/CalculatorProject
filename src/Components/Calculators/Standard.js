@@ -1,5 +1,6 @@
 import React from 'react';
-import "./../Styling/Defaults.css"
+import "./../Styling/Defaults.css";
+
 
 class StandardCalculator extends React.Component {
     constructor(){
@@ -7,10 +8,11 @@ class StandardCalculator extends React.Component {
 
 
         this.state = {
-            Total: '25,748,658',
-            History: [],
+            Total: null,
             CurrentOperation: null,
-            CurrentInput: null
+            CurrentInput: 0,
+            NumericalEntries: [],
+            OperationalEntries: []
         }
 
 
@@ -22,20 +24,51 @@ class StandardCalculator extends React.Component {
         this.setState({CurrentInput: null})
     }
 
-    handleOperation = (Operation) => {
-        const {CurrentInput} = this.state;
-        this.setState({History: [this.state.History.push(CurrentInput)]});
+    handleOperation = async (Operation) => {
+        const {CurrentInput, NumericalEntries, OperationalEntries} = this.state;
+        const JoinedArray = NumericalEntries.concat(CurrentInput);
+        this.setState({NumericalEntries: JoinedArray});
+
         if(Operation === 'Clear'){
             this.setState({CurrentInput: 0})
+            this.setState({NumericalEntries: []})//resets calculation history
+            this.setState({OperationalEntries: []}) //resets calculation history
+        }        
+        if(Operation === 'Addition'){
+            this.setState({CurrentInput: 0})
+            const JoinedArray = OperationalEntries.concat("+");
+            this.setState({OperationalEntries: JoinedArray});
+        }        
+        if(Operation === 'Subtraction'){
+            this.setState({CurrentInput: 0})
+            const JoinedArray = OperationalEntries.concat("-");
+            this.setState({OperationalEntries: JoinedArray});
+        }     
+        if(Operation === 'Divide'){
+            this.setState({CurrentInput: 0})
+            const JoinedArray = OperationalEntries.concat("/");
+            this.setState({OperationalEntries: JoinedArray});
+        }     
+        if(Operation === 'Multiply'){
+            this.setState({CurrentInput: 0})
+            const JoinedArray = OperationalEntries.concat("*");
+            this.setState({OperationalEntries: JoinedArray});
         }
     }
 
-    handleNumericalInput = async (Number) => {
-        const {CurrentInput} = this.state;
-        if(CurrentInput === null){
-            this.setState({CurrentInput: Number})
-        }
+    handleNumericalInput = (Number) => {
         this.setState({CurrentInput: [this.state.CurrentInput + Number]})
+    }
+
+    handleEqual = () => {
+        const {NumericalEntries, OperationalEntries, CurrentInput} = this.state;
+        const Total = NumericalEntries[1];
+        for(let i = 0; i <= NumericalEntries.length - 1; i++){
+            for(let b = 0; b <= OperationalEntries.length - 1; b++){
+
+            }
+        }
+        console.log(Total)
     }
 
     render(){
@@ -44,9 +77,6 @@ class StandardCalculator extends React.Component {
                 <main className="Calculator_TopSection">
                    <header>Standard</header> 
                    <section className="Calculator_Total">
-                       <div id="Calculator_History">
-                            <p>2+2</p>
-                       </div>
                        <main>
                            {+this.state.CurrentInput ? <p>{this.state.CurrentInput}</p>: <p>{this.state.Total}</p>}
                        </main>
@@ -95,7 +125,7 @@ class StandardCalculator extends React.Component {
                         <button id="Button_Operation_NotWorking">+/-</button>
                         <button id="Button_Numerical" onClick={() => this.handleNumericalInput(0)}>0</button>
                         <button id="Button_Operation_NotWorking">.</button>
-                        <button id="Button_Operation_NotWorking" onClick={() => this.handleOperation('Equal')}>=</button>
+                        <button id="Button_Operation_NotWorking" onClick={() => this.handleEqual()}>=</button>
                     </section>
                 </main>
             </div>
