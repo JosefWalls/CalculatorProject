@@ -2,6 +2,8 @@ import React from 'react';
 import "./../Styling/Defaults.css";
 
 
+let CurrentOperation = [null, false]; //[Operation, is there a current one running]
+
 class StandardCalculator extends React.Component {
     constructor(){
         super()
@@ -9,10 +11,11 @@ class StandardCalculator extends React.Component {
 
         this.state = {
             Total: null,
-            CurrentOperation: null,
             CurrentInput: 0,
             NumericalEntries: [],
-            OperationalEntries: []
+            OperationalEntries: [],
+            CurrentlyTyping: false,
+            FirstEntry: true
         }
 
 
@@ -20,55 +23,86 @@ class StandardCalculator extends React.Component {
 
     componentDidMount = () => {
         //resets calculator when loads
-        this.setState({Total: +0})
         this.setState({CurrentInput: null})
+        this.setState({CurrentlyTyping: true})
     }
 
     handleOperation = async (Operation) => {
-        const {CurrentInput, NumericalEntries, OperationalEntries} = this.state;
-        const JoinedArray = NumericalEntries.concat(CurrentInput);
-        this.setState({NumericalEntries: JoinedArray});
-
+        const {CurrentInput, NumericalEntries, Total, CurrentlyTyping} = this.state;
+        console.log(CurrentOperation);
+        //if current operation is for example: ["+", true], the complete operation, then set to [null, false]
+        if(CurrentOperation[1] === true){
+            if(CurrentOperation[0] === "+"){
+                console.log("Current operaton is addition")
+            }
+            if(CurrentOperation[0] === "-"){
+                console.log("Current operaton is -")
+            }
+            if(CurrentOperation[0] === "*"){
+                console.log("Current operaton is *")
+            }
+            if(CurrentOperation[0] === "/"){
+                console.log("Current operaton is /")
+            }
+        }
+        this.setState({CurrentlyTyping: false});
         if(Operation === 'Clear'){
-            this.setState({CurrentInput: 0})
-            this.setState({NumericalEntries: []})//resets calculation history
-            this.setState({OperationalEntries: []}) //resets calculation history
+            this.setState({CurrentInput: null})
         }        
         if(Operation === 'Addition'){
             this.setState({CurrentInput: 0})
-            const JoinedArray = OperationalEntries.concat("+");
-            this.setState({OperationalEntries: JoinedArray});
+            CurrentOperation = ["+", true]
         }        
         if(Operation === 'Subtraction'){
             this.setState({CurrentInput: 0})
-            const JoinedArray = OperationalEntries.concat("-");
-            this.setState({OperationalEntries: JoinedArray});
+            CurrentOperation = ["-", true]
+            console.log(Total)
         }     
         if(Operation === 'Divide'){
             this.setState({CurrentInput: 0})
-            const JoinedArray = OperationalEntries.concat("/");
-            this.setState({OperationalEntries: JoinedArray});
+            CurrentOperation = ["/", true]
+            console.log(Total)
         }     
         if(Operation === 'Multiply'){
             this.setState({CurrentInput: 0})
-            const JoinedArray = OperationalEntries.concat("*");
-            this.setState({OperationalEntries: JoinedArray});
+            CurrentOperation = ["*", true]
+            console.log(Total)
         }
     }
 
     handleNumericalInput = (Number) => {
-        this.setState({CurrentInput: [this.state.CurrentInput + Number]})
+        const {CurrentInput, CurrentlyTyping} = this.state;
+        this.setState({CurrentlyTyping: true})
+        //makes to where you can type more than 1 digit without automatically adding or subtracting etc
+        if([CurrentInput].length === 0){
+            this.setState({CurrentInput: Number})
+            this.setState({Total: Number})
+            console.log("The current inut is (80)" + CurrentInput);
+        }
+        if(CurrentlyTyping){
+            this.setState({CurrentInput: [this.state.CurrentInput + Number]})
+            this.setState({Total: [this.state.Total + Number]})
+            console.log("The current inut is (85)" + CurrentInput);
+        }
     }
 
     handleEqual = () => {
-        const {NumericalEntries, OperationalEntries, CurrentInput} = this.state;
-        const Total = NumericalEntries[1];
-        for(let i = 0; i <= NumericalEntries.length - 1; i++){
-            for(let b = 0; b <= OperationalEntries.length - 1; b++){
-
-            }
+    const {CurrentInput, Total} = this.state;
+    console.log(CurrentOperation)
+    if(CurrentOperation[1] === true){
+        if(CurrentOperation[0] === "+"){
+            this.setState({Total: [+this.state.Total + +CurrentInput]});
         }
-        console.log(Total)
+        if(CurrentOperation[0] === "-"){
+            console.log("Current operaton is -")
+        }
+        if(CurrentOperation[0] === "*"){
+            console.log("Current operaton is *")
+        }
+        if(CurrentOperation[0] === "/"){
+            console.log("Current operaton is /")
+        }
+    }
     }
 
     render(){
@@ -78,7 +112,8 @@ class StandardCalculator extends React.Component {
                    <header>Standard</header> 
                    <section className="Calculator_Total">
                        <main>
-                           {+this.state.CurrentInput ? <p>{this.state.CurrentInput}</p>: <p>{this.state.Total}</p>}
+                           <p>{this.state.CurrentInput}</p>
+                           <h3>{this.state.Total}</h3>
                        </main>
                    </section>
                 </main>
